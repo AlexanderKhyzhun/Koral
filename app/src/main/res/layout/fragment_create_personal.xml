@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/item_toolbar_white" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/fragment_create_personal_input_layout_first_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include"
+        android:layout_weight="1"
+        android:theme="@style/TextInputLayoutStyle">
+
+        <EditText
+            android:id="@+id/fragment_create_personal_et_first_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_round_border"
+            android:hint="First Name"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:inputType="textCapSentences"
+            android:imeOptions="actionNext"
+            android:includeFontPadding="true"
+            android:nextFocusDown="@+id/fragment_create_personal_et_last_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/fragment_create_personal_input_layout_last_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_create_personal_input_layout_first_name"
+        android:layout_weight="1"
+        android:theme="@style/TextInputLayoutStyle">
+
+        <EditText
+            android:id="@+id/fragment_create_personal_et_last_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_round_border"
+            android:hint="Last Name"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:inputType="textCapSentences"
+            android:imeOptions="actionNext"
+            android:includeFontPadding="true"
+            android:nextFocusDown="@+id/fragment_create_personal_et_phone_number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/fragment_create_personal_input_layout_phone_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_create_personal_input_layout_last_name"
+        android:layout_weight="1"
+        android:theme="@style/TextInputLayoutStyle">
+
+        <EditText
+            android:id="@+id/fragment_create_personal_et_phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_round_border"
+            android:hint="Phone number"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:inputType="phone"
+            android:imeOptions="actionNext"
+            android:includeFontPadding="true"
+            android:nextFocusDown="@+id/fragment_create_personal_et_email"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/fragment_create_personal_input_layout_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_create_personal_input_layout_phone_number"
+        android:layout_weight="1"
+        android:theme="@style/TextInputLayoutStyle">
+
+        <EditText
+            android:id="@+id/fragment_create_personal_et_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_round_border"
+            android:hint="Your email"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:inputType="textEmailAddress"
+            android:imeOptions="actionNext"
+            android:includeFontPadding="true"
+            android:nextFocusDown="@+id/fragment_create_personal_et_password"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/fragment_create_personal_input_layout_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_create_personal_input_layout_email"
+        android:layout_weight="1"
+        android:theme="@style/TextInputLayoutStyle">
+
+        <EditText
+            android:id="@+id/fragment_create_personal_et_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_round_border"
+            android:hint="Password"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:inputType="textPassword"
+            android:imeOptions="actionDone"
+            android:nextFocusDown="@+id/fragment_create_personal_btn_next"
+            android:includeFontPadding="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--<EditText-->
+        <!--android:id="@+id/fragment_create_personal_et_password"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="16dp"-->
+        <!--android:layout_marginStart="24dp"-->
+        <!--android:layout_marginEnd="24dp"-->
+        <!--android:background="@drawable/item_round_border"-->
+        <!--android:hint="Password"-->
+        <!--android:inputType="textPassword"-->
+        <!--android:textAllCaps="false"-->
+        <!--android:textColor="@color/black"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/fragment_create_personal_input_layout_email" />-->
+
+
+    <TextView
+        android:id="@+id/fragment_create_personal_tv_terms_and_privacy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:text=""
+        android:textSize="12sp"
+        android:textStyle="normal"
+        android:linksClickable="false"
+        android:clickable="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_create_personal_input_layout_password" />
+
+
+    <TextView
+        android:id="@+id/fragment_create_personal_tv_terms_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:text="You have to accept terms and privacy policy to continue"
+        android:textSize="12sp"
+        android:textStyle="normal"
+        android:textColor="@color/error"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_create_personal_checked_tv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <CheckBox
+        android:id="@+id/fragment_create_personal_checked_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
+        android:checked="true"
+        android:text="I accept the terms and conditions"
+        android:textColor="@color/hint_color"
+        android:textSize="12sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_create_personal_tv_terms_and_privacy" />
+
+
+    <Button
+        android:id="@+id/fragment_create_personal_btn_next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/item_round_solid"
+        android:text="Next"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

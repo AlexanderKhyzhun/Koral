@@ -1,0 +1,23 @@
+<!--?xml version="1.0" encoding="UTF-8"?-->
+<resources>
+    <color name="primary">#5f3284</color>
+    <color name="primaryLight">#654e7a</color>
+    <color name="primaryDark">#160824</color>
+    <color name="primaryAccept">#5c007a</color>
+    <color name="primaryText">#ffffff</color>
+    <color name="primaryHint">#9aa1a6</color>
+    <color name="primaryHintGray">#F1F1F1</color>
+
+    <color name="error">#BE1405</color>
+    <color name="inactive">#505a60</color>
+
+    <color name="navigation_active_button">#8e24aa</color>
+    <color name="navigation_inactive_button">#505a60</color>
+    <color name="splash_gradient_start">#5f3284</color>
+    <color name="splash_gradient_end">#160824</color>
+    <color name="white">#FFFFFF</color>
+
+
+    <color name="button_dark">#3a1d53</color>
+
+</resources>

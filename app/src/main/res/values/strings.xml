@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Koral</string>
+
+    <string name="title_search">Search</string>
+    <string name="title_favourites">Favourites</string>
+    <string name="title_calendar">Calendar</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_profile">Profile</string>
+
+
+
+    <string name="error_first_name">Please enter your first name</string>
+    <string name="error_last_name">Please enter your last name</string>
+    <string name="error_email">Please enter your email address</string>
+    <string name="error_phone_number">Please enter your phone number</string>
+    <string name="error_password">Password must be at least 6 characters</string>
+
+</resources>
