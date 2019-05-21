@@ -8,6 +8,7 @@ import com.yotalabs.koral.ui.adapters.DisplayableItem
 import com.yotalabs.koral.ui.adapters.models.ServiceItem
 import com.yotalabs.koral.ui.adapters.models.SubServiceItem
 import com.yotalabs.koral.ui.mvp.BasePresenter
+import io.reactivex.subjects.BehaviorSubject
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import timber.log.Timber
@@ -25,17 +26,12 @@ class ServicesPresenter : BasePresenter<ServicesView>(), KoinComponent {
 
     private lateinit var services: List<ServiceItem>
 
+    private val priceSubj: BehaviorSubject<Int> = BehaviorSubject.create<Int>()
+    private val durationSubj: BehaviorSubject<Int> = BehaviorSubject.create<Int>()
+
+
     init {
         fetchCategories()
-    }
-
-
-    fun onClickOnSubService(item: DisplayableItem) {
-        item as SubServiceItem
-        item.selected = item.selected.not()
-
-        useCase.addSubServiceToSelected(item)
-        Timber.d("item=$item")
     }
 
 
@@ -48,6 +44,28 @@ class ServicesPresenter : BasePresenter<ServicesView>(), KoinComponent {
         viewState.showSubCategoriesRecycler()
 
         fetchSubCategories(item)
+    }
+
+
+    fun onClickOnSubService(item: DisplayableItem) {
+        item as SubServiceItem
+        Timber.d("item=$item")
+
+        //useCase.addSubServiceToSelected(item)
+        viewState.showSlideUpMenu(item.title)
+    }
+
+
+    private fun fetchSubCategories(service: ServiceItem) {
+        useCase.fetchSubCategoryByCategory(service.title)
+            .compose(bindUntilDestroy())
+            .subscribeOn(schedulers.io())
+            .observeOn(schedulers.mainThread())
+            .doOnError { viewState.hideLoader() }
+            .doOnSubscribe { viewState.showLoader() }
+            .subscribe({
+                viewState.renderSubServices(it)
+            }, viewState::renderError)
     }
 
 
@@ -66,26 +84,19 @@ class ServicesPresenter : BasePresenter<ServicesView>(), KoinComponent {
     }
 
 
-    private fun fetchSubCategories(service: ServiceItem) {
-        useCase.fetchSubCategoryByCategory(service.title)
-            .compose(bindUntilDestroy())
-            .subscribeOn(schedulers.io())
-            .observeOn(schedulers.mainThread())
-            .doOnError { viewState.hideLoader() }
-            .doOnSubscribe { viewState.showLoader() }
-            .subscribe({
-                viewState.renderSubServices(it)
-            }, viewState::renderError)
-    }
-
-
     fun onClickApply(price: Int, duration: Int) {
-        Timber.d("price: $price, duration: $duration")
+        Timber.d("onClickApply | price: $price, duration: $duration")
 
         // add saved value to some subject where would be stored all sub services
         // useCase.addSubServiceToSelected(title, price, duration)
 
+        //priceSubj.onNext()
+
         viewState.onApplyClicked()
+    }
+
+    fun onClickClose() {
+        viewState.onCloseClicked()
     }
 
 

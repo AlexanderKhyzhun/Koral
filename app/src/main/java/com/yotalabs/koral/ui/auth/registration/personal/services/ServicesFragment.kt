@@ -6,11 +6,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.jakewharton.rxbinding2.view.clicks
-import com.mancj.slideup.SlideUp
+import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import com.yotalabs.koral.R
 import com.yotalabs.koral.data.Schedulers
 import com.yotalabs.koral.ui.adapters.DelegateAdapter
@@ -27,12 +28,16 @@ import com.yotalabs.koral.ui.mvp.BaseFragment
 import com.yotalabs.koral.utils.dp
 import com.yotalabs.koral.utils.setGone
 import com.yotalabs.koral.utils.setVisible
+import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_services.*
 import kotlinx.android.synthetic.main.item_slide_up_services.*
 import kotlinx.android.synthetic.main.item_toolbar_purple.*
 import org.jetbrains.anko.support.v4.toast
 import org.koin.android.ext.android.inject
+import java.util.*
 import java.util.concurrent.TimeUnit
+
+
 
 /**
  * @author SashaKhyzhun
@@ -60,7 +65,6 @@ class ServicesFragment : BaseFragment(), ServicesView {
         DelegateAdapter<DisplayableItem>()
     }
 
-//    lateinit var slideUp: SlideUp
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -134,28 +138,48 @@ class ServicesFragment : BaseFragment(), ServicesView {
             )
         }
 
-//        val slideView = view.findViewById<View>(R.id.item_slide_up_layout_parent)
-//        slideUp = SlideUp(slideView)
-//        slideUp.hideImmediately()
 
-//        slideUp.setSlideListener(object : SlideUp.SlideListener {
-//            override fun onSlideDown(percent: Float) {/*what to do while slide down*/ }
-//            override fun onVisibilityChanged(visibility: Int) {/*show or hide views*/ }
-//        })
+        item_slide_up_services_sb_price.setOnSeekBarChangeListener(
+            object : SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(sb: SeekBar?, progress: Int, fromUser: Boolean) {
+                    item_slide_up_services_tv_price.text = sb?.progress.toString().plus(USD)
+                }
+                override fun onStartTrackingTouch(sb: SeekBar?) {}
+                override fun onStopTrackingTouch(sb: SeekBar?) {}
+            }
+        )
 
-        // slideUp.animateIn() //showView
+        item_slide_up_services_sb_duration.setOnSeekBarChangeListener(
+            object : SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(sb: SeekBar?, progress: Int, fromUser: Boolean) {
+                    item_slide_up_services_tv_duration.text = sb?.progress.toString().plus(MINUTES)
+                }
+                override fun onStartTrackingTouch(sb: SeekBar?) {}
+                override fun onStopTrackingTouch(sb: SeekBar?) {}
+            }
+        )
 
-//        item_slide_up_services_btn_apply.clicks()
-//            .debounce(BaseActivity.CLICK_DEBOUNCE, TimeUnit.MILLISECONDS)
-//            .compose(bindUntilDestroy())
-//            .observeOn(schedulers.mainThread())
-//            .subscribe {
-//                presenter.onClickApply(
-//                    item_slide_up_services_sb_price.progress,
-//                    item_slide_up_services_sb_duration.progress
-//                )
-//            }
 
+        item_slide_up_services_btn_apply.clicks()
+            .debounce(BaseActivity.CLICK_DEBOUNCE, TimeUnit.MILLISECONDS)
+            .compose(bindUntilDestroy())
+            .observeOn(schedulers.mainThread())
+            .subscribe {
+                presenter.onClickApply(
+                    item_slide_up_services_sb_price.progress,
+                    item_slide_up_services_sb_duration.progress
+                )
+            }
+
+        item_slide_up_services_iv_close.clicks()
+            .debounce(BaseActivity.CLICK_DEBOUNCE, TimeUnit.MILLISECONDS)
+            .compose(bindUntilDestroy())
+            .observeOn(schedulers.mainThread())
+            .subscribe { presenter.onClickClose() }
+
+
+        fragment_services_parent_sliding_up_panel.isClickable = false
+        fragment_services_parent_sliding_up_panel.isTouchEnabled = false
 
 
     }
@@ -173,8 +197,17 @@ class ServicesFragment : BaseFragment(), ServicesView {
         }
     }
 
-    override fun onApplyClicked() {
+    override fun showSlideUpMenu(title: String) {
+        item_slide_up_services_tv_choose_title.text = title
+        fragment_services_parent_sliding_up_panel.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
+    }
 
+    override fun onApplyClicked() {
+        fragment_services_parent_sliding_up_panel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+    }
+
+    override fun onCloseClicked() {
+        fragment_services_parent_sliding_up_panel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
     }
 
     override fun renderError(throwable: Throwable) {
@@ -209,6 +242,8 @@ class ServicesFragment : BaseFragment(), ServicesView {
     companion object {
         const val TITLE = "Add Services"
         const val TAG = "ServicesFragment"
+        const val USD = " usd"
+        const val MINUTES = " minutes"
         fun newInstance() = ServicesFragment()
     }
 }

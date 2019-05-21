@@ -71,16 +71,33 @@ class AuthActivity : BaseActivity(), AuthView,
                 ChooseAccountFragment.TAG,
                 ChangeAnimation.BACK
             )
-            is CreatePersonalFragment -> attachFragment(
-                ChooseAccountFragment.newInstance(),
-                ChooseAccountFragment.TAG,
-                ChangeAnimation.BACK
-            )
             is CreateCorporateFragment -> attachFragment(
                 ChooseAccountFragment.newInstance(),
                 ChooseAccountFragment.TAG,
                 ChangeAnimation.BACK
             )
+            /* Personal Account Flow */
+            is CreatePersonalFragment -> attachFragment(
+                ChooseAccountFragment.newInstance(),
+                ChooseAccountFragment.TAG,
+                ChangeAnimation.BACK
+            )
+            is ProfessionFragment -> attachFragment(
+                CreatePersonalFragment.newInstance(),
+                CreatePersonalFragment.TAG,
+                ChangeAnimation.BACK
+            )
+            is OtherFragment -> attachFragment(
+                ProfessionFragment.newInstance(),
+                ProfessionFragment.TAG,
+                ChangeAnimation.BACK
+            )
+            is ServicesFragment -> attachFragment(
+                ProfessionFragment.newInstance(),
+                ProfessionFragment.TAG,
+                ChangeAnimation.BACK
+            )
+
             else -> super.onBackPressed()
         }
     }
@@ -90,8 +107,8 @@ class AuthActivity : BaseActivity(), AuthView,
         replaceFragment(
             R.id.activity_login_container,
             supportFragmentManager,
-            LoginFragment.newInstance(),
-            LoginFragment.TAG
+            ServicesFragment.newInstance(),
+            ServicesFragment.TAG
         )
     }
 

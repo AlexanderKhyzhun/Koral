@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <corners
-        android:topLeftRadius="45.0dp"
-        android:topRightRadius="45.0dp"
+        android:topLeftRadius="60.0dp"
+        android:topRightRadius="60.0dp"
         />
 
     <solid android:color="@color/primaryHintGray" />
