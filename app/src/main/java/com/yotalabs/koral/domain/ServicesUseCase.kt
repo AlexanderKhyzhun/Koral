@@ -3,6 +3,7 @@ package com.yotalabs.koral.domain
 import com.yotalabs.koral.ui.adapters.models.ServiceItem
 import com.yotalabs.koral.ui.adapters.models.SubServiceItem
 import io.reactivex.Single
+import io.reactivex.subjects.BehaviorSubject
 
 interface ServicesUseCase {
 
@@ -13,5 +14,7 @@ interface ServicesUseCase {
     fun addSubServiceToSelected(item: SubServiceItem)
 
     fun changeSelectedService(item: ServiceItem)
+
+    fun selectedSubServices(): BehaviorSubject<MutableList<SubServiceItem>>
 
 }

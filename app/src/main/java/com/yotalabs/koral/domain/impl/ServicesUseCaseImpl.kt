@@ -6,6 +6,7 @@ import com.yotalabs.koral.domain.ServicesUseCase
 import com.yotalabs.koral.ui.adapters.models.ServiceItem
 import com.yotalabs.koral.ui.adapters.models.SubServiceItem
 import io.reactivex.Single
+import io.reactivex.subjects.BehaviorSubject
 
 class ServicesUseCaseImpl(
     private val api: Api,
@@ -24,7 +25,6 @@ class ServicesUseCaseImpl(
             )
         }
     }
-
 
     override fun fetchSubCategoryByCategory(categoryTitle: String): Single<List<SubServiceItem>> {
         return Single.fromCallable {
@@ -51,6 +51,9 @@ class ServicesUseCaseImpl(
         }
     }
 
+    override fun selectedSubServices(): BehaviorSubject<MutableList<SubServiceItem>>
+            = signUp.selectedSubServices()
+
     override fun addSubServiceToSelected(item: SubServiceItem) {
         signUp.subServices().onNext(item)
     }
@@ -58,6 +61,5 @@ class ServicesUseCaseImpl(
     override fun changeSelectedService(item: ServiceItem) {
         signUp.selectedService().onNext(item)
     }
-
 
 }

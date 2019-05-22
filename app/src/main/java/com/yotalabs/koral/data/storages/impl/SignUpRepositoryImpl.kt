@@ -26,6 +26,8 @@ class SignUpRepositoryImpl : SignUpRepository {
     private val profession = BehaviorSubject.create<ProfessionItem>()
     private val subServices = BehaviorSubject.create<SubServiceItem>()
     private val selectedService = BehaviorSubject.create<ServiceItem>()
+    private val selectedSubService = BehaviorSubject.create<MutableList<SubServiceItem>>()
+
 
 
     override fun firstName(): BehaviorSubject<CharSequence> = firstNameChangesSubject
@@ -55,4 +57,8 @@ class SignUpRepositoryImpl : SignUpRepository {
     override fun subServices(): BehaviorSubject<SubServiceItem> = subServices
 
     override fun selectedService(): BehaviorSubject<ServiceItem> = selectedService
+
+    override fun selectedSubServices(): BehaviorSubject<MutableList<SubServiceItem>> = selectedSubService
+
+
 }

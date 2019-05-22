@@ -21,5 +21,6 @@ interface SignUpRepository {
     fun profession(): BehaviorSubject<ProfessionItem>
     fun subServices(): BehaviorSubject<SubServiceItem>
     fun selectedService(): BehaviorSubject<ServiceItem>
+    fun selectedSubServices(): BehaviorSubject<MutableList<SubServiceItem>>
 
 }

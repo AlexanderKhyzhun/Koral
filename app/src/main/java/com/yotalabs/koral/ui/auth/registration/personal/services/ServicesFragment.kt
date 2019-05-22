@@ -28,13 +28,10 @@ import com.yotalabs.koral.ui.mvp.BaseFragment
 import com.yotalabs.koral.utils.dp
 import com.yotalabs.koral.utils.setGone
 import com.yotalabs.koral.utils.setVisible
-import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_services.*
 import kotlinx.android.synthetic.main.item_slide_up_services.*
 import kotlinx.android.synthetic.main.item_toolbar_purple.*
-import org.jetbrains.anko.support.v4.toast
 import org.koin.android.ext.android.inject
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 
@@ -166,9 +163,11 @@ class ServicesFragment : BaseFragment(), ServicesView {
             .observeOn(schedulers.mainThread())
             .subscribe {
                 presenter.onClickApply(
-                    item_slide_up_services_sb_price.progress,
-                    item_slide_up_services_sb_duration.progress
+                    item_slide_up_services_sb_price.progress.toString(),
+                    item_slide_up_services_sb_duration.progress.toString()
                 )
+                item_slide_up_services_sb_price.progress = DEFAULT_PRICE
+                item_slide_up_services_sb_duration.progress = DEFAULT_DURATION
             }
 
         item_slide_up_services_iv_close.clicks()
@@ -197,8 +196,8 @@ class ServicesFragment : BaseFragment(), ServicesView {
         }
     }
 
-    override fun showSlideUpMenu(title: String) {
-        item_slide_up_services_tv_choose_title.text = title
+    override fun showSlideUpMenu(subService: SubServiceItem) {
+        item_slide_up_services_tv_choose_title.text = subService.title
         fragment_services_parent_sliding_up_panel.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
     }
 
@@ -244,6 +243,8 @@ class ServicesFragment : BaseFragment(), ServicesView {
         const val TAG = "ServicesFragment"
         const val USD = " usd"
         const val MINUTES = " minutes"
+        const val DEFAULT_PRICE = 10
+        const val DEFAULT_DURATION = 30
         fun newInstance() = ServicesFragment()
     }
 }

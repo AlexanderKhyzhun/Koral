@@ -31,7 +31,7 @@ interface ServicesView : MvpView, ErrorView, LoadingView {
     fun showSubCategoriesRecycler()
 
     @StateStrategyType(OneExecutionStateStrategy::class)
-    fun showSlideUpMenu(title: String)
+    fun showSlideUpMenu(subService: SubServiceItem)
 
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun onCloseClicked()
