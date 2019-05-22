@@ -40,11 +40,11 @@ class ServicesUseCaseImpl(
                 }
                 else -> {
                     listOf<SubServiceItem>(
-                        SubServiceItem("1", "Computer"),
-                        SubServiceItem("2", "Animal"),
-                        SubServiceItem("3", "Orange"),
-                        SubServiceItem("4", "School"),
-                        SubServiceItem("5", "Tree")
+                        SubServiceItem("6", "Computer"),
+                        SubServiceItem("7", "Animal"),
+                        SubServiceItem("8", "Orange"),
+                        SubServiceItem("9", "School"),
+                        SubServiceItem("10", "Tree")
                     )
                 }
             }

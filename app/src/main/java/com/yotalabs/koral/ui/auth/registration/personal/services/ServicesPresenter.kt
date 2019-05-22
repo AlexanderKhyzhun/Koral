@@ -85,9 +85,23 @@ class ServicesPresenter : BasePresenter<ServicesView>(), KoinComponent {
     }
 
     fun onClickOnMinus(item: SubServiceItem) {
+        Timber.d("onClickOnMinus | before | $subServices")
+        lastSelected = item
+
+        subServices.forEach {
+            if (it.id == item.id) {
+                //subServices.remove(it)
+                it.isSelected = false
+            }
+        }
+
+        Timber.d("onClickOnMinus | after | $subServices")
+        useCase.selectedSubServices().onNext(subServices)
     }
 
     fun onClickApply(price: String, duration: String) {
+        Timber.d("onClickApply | before | $subServices")
+
         lastSelected?.let {
             it.apply {
                 this.price = price
@@ -98,8 +112,9 @@ class ServicesPresenter : BasePresenter<ServicesView>(), KoinComponent {
             subServices.add(it)
         }
 
-        useCase.selectedSubServices().onNext(subServices)
+        Timber.d("onClickApply | after | $subServices")
 
+        useCase.selectedSubServices().onNext(subServices)
         viewState.onApplyClicked()
     }
 

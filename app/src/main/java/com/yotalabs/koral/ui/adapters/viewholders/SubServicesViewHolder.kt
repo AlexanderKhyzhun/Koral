@@ -44,6 +44,7 @@ class SubServicesViewHolder(view: View) : RecyclerView.ViewHolder(view), KoinCom
                 item_sub_service_img_plus.clicks()
                     .compose(dispose.invoke())
                     .observeOn(schedulers.mainThread())
+                    .doOnError { Timber.e(it) }
                     .subscribe { click.invoke(item) }
 
                 item_sub_service_tv_title.text = it.title
@@ -53,15 +54,19 @@ class SubServicesViewHolder(view: View) : RecyclerView.ViewHolder(view), KoinCom
                     false -> item_sub_service_img_plus.setBackgroundResource(R.drawable.ic_plus_circle_black)
                 }
 
+
                 signUpRepository.selectedSubServices().subscribe { subServices ->
                     Timber.d("ViewHolder | subscribe | subServices=$subServices")
-                    subServices.forEach {
-                        if (it.title == item.title) {
-                            when (it.isSelected) {
-                                true -> item_sub_service_img_plus.setBackgroundResource(R.drawable.ic_minus_circle_black)
-                                false -> item_sub_service_img_plus.setBackgroundResource(R.drawable.ic_plus_circle_black)
+
+                        subServices.forEach {
+                            if (it.id == item.id) {
+                                when (it.isSelected) {
+                                    true -> item_sub_service_img_plus.setBackgroundResource(R.drawable.ic_minus_circle_black)
+                                    false -> item_sub_service_img_plus.setBackgroundResource(R.drawable.ic_plus_circle_black)
+                                }
                             }
-                        }
+
+
                     }
                 }
 
