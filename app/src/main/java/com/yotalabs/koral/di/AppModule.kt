@@ -64,6 +64,7 @@ class AppModule(val context: Context) {
         single { SignUpBusinessUseCaseImpl(get(), get()) } bind (SignUpBusinessUseCase::class)
         single { ProfessionUseCaseImpl(get(), get()) } bind (ProfessionUseCase::class)
         single { ServicesUseCaseImpl(get(), get()) } bind (ServicesUseCase::class)
+        single { ConfirmationUseCaseImpl(get()) } bind (ConfirmationUseCase::class)
 
     }
 

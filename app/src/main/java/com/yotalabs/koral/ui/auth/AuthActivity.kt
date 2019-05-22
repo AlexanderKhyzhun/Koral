@@ -10,9 +10,11 @@ import com.yotalabs.koral.R
 import com.yotalabs.koral.data.Schedulers
 import com.yotalabs.koral.ui.auth.login.LoginFragment
 import com.yotalabs.koral.ui.auth.choose.ChooseAccountFragment
+import com.yotalabs.koral.ui.auth.photo.PhotoFragment
 import com.yotalabs.koral.ui.auth.registration.corporate.CreateCorporateFragment
 import com.yotalabs.koral.ui.auth.registration.customer.CreateCustomerFragment
 import com.yotalabs.koral.ui.auth.registration.personal.CreatePersonalFragment
+import com.yotalabs.koral.ui.auth.registration.personal.confirmation.ConfirmationFragment
 import com.yotalabs.koral.ui.auth.registration.personal.other.OtherFragment
 import com.yotalabs.koral.ui.auth.registration.personal.profession.ProfessionFragment
 import com.yotalabs.koral.ui.auth.registration.personal.services.ServicesFragment
@@ -37,7 +39,8 @@ class AuthActivity : BaseActivity(), AuthView,
     CreateCorporateFragment.Callback,
     ProfessionFragment.Callback,
     OtherFragment.Callback,
-    ServicesFragment.Callback {
+    ServicesFragment.Callback,
+    ConfirmationFragment.Callback {
 
     val schedulers: Schedulers by inject()
 
@@ -222,6 +225,30 @@ class AuthActivity : BaseActivity(), AuthView,
             ProfessionFragment.newInstance(),
             ProfessionFragment.TAG,
             ChangeAnimation.BACK
+        )
+    }
+
+    override fun redirectFromServicesToConfirmation() {
+        attachFragment(
+            ConfirmationFragment.newInstance(),
+            ConfirmationFragment.TAG,
+            ChangeAnimation.FORWARD
+        )
+    }
+
+    override fun fromConfirmationToServices() {
+        attachFragment(
+            ServicesFragment.newInstance(),
+            ServicesFragment.TAG,
+            ChangeAnimation.BACK
+        )
+    }
+
+    override fun fromConfirmationToPhoto() {
+        attachFragment(
+            PhotoFragment.newInstance(),
+            PhotoFragment.TAG,
+            ChangeAnimation.FORWARD
         )
     }
 

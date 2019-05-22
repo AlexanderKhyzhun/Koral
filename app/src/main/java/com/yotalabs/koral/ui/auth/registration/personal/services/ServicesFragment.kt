@@ -45,6 +45,7 @@ class ServicesFragment : BaseFragment(), ServicesView {
 
     interface Callback {
         fun redirectFromServicesToProfessions()
+        fun redirectFromServicesToConfirmation()
     }
 
     val schedulers: Schedulers by inject()
@@ -85,11 +86,19 @@ class ServicesFragment : BaseFragment(), ServicesView {
 
         item_toolbar_title.text = TITLE
 
+        item_toolbar_right_button.text = TOOLBAR_BUTTON
+
         item_toolbar_back_button.clicks()
             .debounce(BaseActivity.CLICK_DEBOUNCE, TimeUnit.MILLISECONDS)
             .compose(bindUntilDestroy())
             .observeOn(schedulers.mainThread())
             .subscribe { callback?.redirectFromServicesToProfessions() }
+
+        item_toolbar_right_button.clicks()
+            .debounce(BaseActivity.CLICK_DEBOUNCE, TimeUnit.MILLISECONDS)
+            .compose(bindUntilDestroy())
+            .observeOn(schedulers.mainThread())
+            .subscribe { presenter.onClickSave() }
 
 
         servicesAdapter.delegatesManager.addDelegate(
@@ -209,6 +218,10 @@ class ServicesFragment : BaseFragment(), ServicesView {
         fragment_services_parent_sliding_up_panel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
     }
 
+    override fun onSaveClicked() {
+        callback?.redirectFromServicesToConfirmation()
+    }
+
     override fun renderError(throwable: Throwable) {
         showSnack(throwable.message)
     }
@@ -223,6 +236,14 @@ class ServicesFragment : BaseFragment(), ServicesView {
 
     override fun showSubCategoriesRecycler() {
         fragment_services_rv_sub_services.setVisible()
+    }
+
+    override fun hideSaveButton() {
+        item_toolbar_right_button.setGone()
+    }
+
+    override fun showSaveButton() {
+        item_toolbar_right_button.setVisible()
     }
 
     override fun showLoader() {
@@ -240,6 +261,7 @@ class ServicesFragment : BaseFragment(), ServicesView {
 
     companion object {
         const val TITLE = "Add Services"
+        const val TOOLBAR_BUTTON = "Save"
         const val TAG = "ServicesFragment"
         const val USD = " usd"
         const val MINUTES = " minutes"

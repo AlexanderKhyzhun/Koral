@@ -30,6 +30,13 @@ class ServicesPresenter : BasePresenter<ServicesView>(), KoinComponent {
 
     init {
         fetchCategories()
+
+        useCase.selectedSubServices().subscribe { data ->
+            when (data.filter { it.isSelected }.size) {
+                0 -> viewState.hideSaveButton()
+                else -> viewState.showSaveButton()
+            }
+        }
     }
 
 
@@ -120,6 +127,10 @@ class ServicesPresenter : BasePresenter<ServicesView>(), KoinComponent {
 
     fun onClickClose() {
         viewState.onCloseClicked()
+    }
+
+    fun onClickSave() {
+        viewState.onSaveClicked()
     }
 
 

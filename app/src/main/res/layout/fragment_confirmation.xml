@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/item_toolbar_purple" />
+
+
+    <CheckBox
+        android:id="@+id/fragment_confirmation_cb_for_all"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="For all customers"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="normal"
+        android:textAllCaps="false"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="24dp"
+        android:padding="8dp"
+        android:checked="true"
+        android:layoutDirection="rtl"
+        app:layout_constraintTop_toBottomOf="@+id/include"
+        />
+
+    <CheckBox
+        android:id="@+id/fragment_confirmation_cb_for_new"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="For new customer"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="normal"
+        android:textAllCaps="false"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="16dp"
+        android:padding="8dp"
+        android:layoutDirection="rtl"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_confirmation_cb_for_all"
+        />
+
+    <CheckBox
+        android:id="@+id/fragment_confirmation_cb_under_three_star"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Under 3 star in rating"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="normal"
+        android:textAllCaps="false"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="16dp"
+        android:padding="8dp"
+        android:layoutDirection="rtl"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_confirmation_cb_for_new"
+        />
+
+    <CheckBox
+        android:id="@+id/fragment_confirmation_cb_without"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Without confirmation"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="normal"
+        android:textAllCaps="false"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="16dp"
+        android:padding="8dp"
+        android:layoutDirection="rtl"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_confirmation_cb_under_three_star"
+        />
+
+    <Button
+        android:id="@+id/fragment_confirmation_button_apply"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="48dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/item_round_solid"
+        android:text="Apply"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -36,4 +36,13 @@ interface ServicesView : MvpView, ErrorView, LoadingView {
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun onCloseClicked()
 
+    @StateStrategyType(OneExecutionStateStrategy::class)
+    fun hideSaveButton()
+
+    @StateStrategyType(OneExecutionStateStrategy::class)
+    fun showSaveButton()
+
+    @StateStrategyType(OneExecutionStateStrategy::class)
+    fun onSaveClicked()
+
 }

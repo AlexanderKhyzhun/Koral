@@ -1,4 +1,4 @@
-package com.yotalabs.koral.ui.auth.registration.personal.confirmation
+package com.yotalabs.koral.ui.auth.photo
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -12,29 +12,26 @@ import com.yotalabs.koral.R
 import com.yotalabs.koral.data.Schedulers
 import com.yotalabs.koral.ui.mvp.BaseActivity
 import com.yotalabs.koral.ui.mvp.BaseFragment
-import com.yotalabs.koral.utils.empty
-import com.yotalabs.koral.utils.setVisible
-import kotlinx.android.synthetic.main.fragment_confirmation.*
+import kotlinx.android.synthetic.main.fragment_photo.*
 import kotlinx.android.synthetic.main.item_toolbar_purple.*
 import org.koin.android.ext.android.inject
-import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 /**
  * @author SashaKhyzhun
- * Created on 5/9/19.
+ * Created on 2019-05-22.
  */
-class ConfirmationFragment : BaseFragment(), ConfirmationView {
+class PhotoFragment : BaseFragment(), PhotoView {
 
     interface Callback {
-        fun fromConfirmationToServices()
-        fun fromConfirmationToPhoto()
+        fun redirectFromPhotoToConfirmation()
+        fun redirectFromPhotoToCongratulations()
     }
 
     val schedulers: Schedulers by inject()
 
     @InjectPresenter
-    lateinit var presenter: ConfirmationPresenter
+    lateinit var presenter: PhotoPresenter
 
     private var callback: Callback? = null
 
@@ -46,13 +43,12 @@ class ConfirmationFragment : BaseFragment(), ConfirmationView {
             throw RuntimeException("$context must implement Callback")
         }
     }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_confirmation, container, false)
+        return inflater.inflate(R.layout.fragment_photo, container, false)
     }
 
     @SuppressLint("CheckResult")
@@ -61,52 +57,51 @@ class ConfirmationFragment : BaseFragment(), ConfirmationView {
 
         item_toolbar_title.text = TITLE
 
-        item_toolbar_right_button.setVisible()
-
-        item_toolbar_right_button.text = TOOLBAR_BUTTON
-
         item_toolbar_back_button.clicks()
             .debounce(BaseActivity.CLICK_DEBOUNCE, TimeUnit.MILLISECONDS)
             .compose(bindUntilDestroy())
             .observeOn(schedulers.mainThread())
-            .subscribe { callback?.fromConfirmationToServices() }
+            .subscribe { callback?.redirectFromPhotoToConfirmation() }
 
-
-        fragment_confirmation_button_apply.clicks()
+        item_toolbar_right_button.clicks()
             .debounce(BaseActivity.CLICK_DEBOUNCE, TimeUnit.MILLISECONDS)
             .compose(bindUntilDestroy())
             .observeOn(schedulers.mainThread())
-            .subscribe {
-                presenter.onClickApply(
-                    fragment_confirmation_cb_for_all.isChecked,
-                    fragment_confirmation_cb_for_new.isChecked,
-                    fragment_confirmation_cb_under_three_star.isChecked,
-                    fragment_confirmation_cb_without.isChecked
-                )
-            }
+            .subscribe { presenter.onClickSave() }
 
+        fragment_photo_layout_take.clicks()
+            .debounce(BaseActivity.CLICK_DEBOUNCE, TimeUnit.MILLISECONDS)
+            .compose(bindUntilDestroy())
+            .observeOn(schedulers.mainThread())
+            .subscribe { presenter.onClickTakePhoto() }
 
-        context?.createAlertDialog(
-            schedulers,
-            empty(),
-            "Please choose the most suitable confirmation method for your bookings. " +
-                    "You can read more about the option in the 'info' section",
-            "Continue",
-            empty(),
-            { Timber.d("negative") },
-            { Timber.d("positive") }
-        )
+        fragment_photo_layout_import.clicks()
+            .debounce(BaseActivity.CLICK_DEBOUNCE, TimeUnit.MILLISECONDS)
+            .compose(bindUntilDestroy())
+            .observeOn(schedulers.mainThread())
+            .subscribe { presenter.onClickImport() }
 
-    }
-
-
-    override fun onClickedApply() {
-        callback?.fromConfirmationToPhoto()
     }
 
     override fun onDetach() {
         super.onDetach()
         callback = null
+    }
+
+    override fun renderName(userName: String) {
+        fragment_photo_tv_name.text = userName
+    }
+
+    override fun renderImage(image: String) {
+
+    }
+
+    override fun renderError(throwable: Throwable) {
+        showSnack(throwable.message)
+    }
+
+    override fun renderMessage(text: String) {
+        showSnack(text)
     }
 
     override fun showLoader() {
@@ -117,18 +112,11 @@ class ConfirmationFragment : BaseFragment(), ConfirmationView {
 
     }
 
-    override fun renderError(throwable: Throwable) {
-
-    }
-
-    override fun renderMessage(text: String) {
-
-    }
-
     companion object {
-        const val TITLE = "Confirmation"
-        const val TOOLBAR_BUTTON = "Info"
-        const val TAG = "ConfirmationFragment"
-        fun newInstance() = ConfirmationFragment()
+        const val TITLE = "Add Profile Photo"
+        const val TOOLBAR_BUTTON = "Save"
+        const val TAG = "PhotoFragment"
+
+        fun newInstance() = PhotoFragment()
     }
 }
