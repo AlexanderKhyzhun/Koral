@@ -20,4 +20,6 @@
 
     <color name="button_dark">#3a1d53</color>
 
+    <color name="image_preview">#DDDDDD</color>
+
 </resources>

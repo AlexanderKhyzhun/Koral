@@ -1,5 +1,6 @@
 package com.yotalabs.koral.data.storages.impl
 
+import android.graphics.Bitmap
 import com.yotalabs.koral.data.storages.SignUpCustomerRepository
 import com.yotalabs.koral.data.storages.SignUpPersonalRepository
 import com.yotalabs.koral.data.storages.SignUpRepository
@@ -24,7 +25,7 @@ class SignUpPersonalRepositoryImpl(
 
     override fun password(): BehaviorSubject<CharSequence> = signUpRepository.password()
 
-    override fun photo(): BehaviorSubject<CharSequence> = signUpRepository.photo()
+    override fun photo(): BehaviorSubject<Bitmap> = signUpRepository.photo()
 
     override fun accountType(): BehaviorSubject<CharSequence> = signUpRepository.accountType()
 

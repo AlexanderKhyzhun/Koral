@@ -1,6 +1,5 @@
 package com.yotalabs.koral.data.storages
 
-import com.yotalabs.koral.data.models.AccountPersonal
 import com.yotalabs.koral.enums.Account
 
 /**

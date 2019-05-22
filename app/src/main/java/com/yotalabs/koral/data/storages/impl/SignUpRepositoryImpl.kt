@@ -1,5 +1,6 @@
 package com.yotalabs.koral.data.storages.impl
 
+import android.graphics.Bitmap
 import com.yotalabs.koral.data.storages.SignUpRepository
 import com.yotalabs.koral.ui.adapters.models.ProfessionItem
 import com.yotalabs.koral.ui.adapters.models.ServiceItem
@@ -17,7 +18,7 @@ class SignUpRepositoryImpl : SignUpRepository {
     private val phoneNumberChangesSubject = BehaviorSubject.create<CharSequence>()
     private val emailChangesSubject = BehaviorSubject.create<CharSequence>()
     private val passwordChangesSubject = BehaviorSubject.create<CharSequence>()
-    private val photoSubject = BehaviorSubject.create<CharSequence>()
+    private val photoSubject = BehaviorSubject.create<Bitmap>()
     private val businessNameSubject = BehaviorSubject.create<CharSequence>()
     private val businessTypeSubject = BehaviorSubject.create<CharSequence>()
     private val accountTypeSubject = BehaviorSubject.create<CharSequence>()
@@ -40,7 +41,7 @@ class SignUpRepositoryImpl : SignUpRepository {
 
     override fun password(): BehaviorSubject<CharSequence> = passwordChangesSubject
 
-    override fun photo(): BehaviorSubject<CharSequence> = photoSubject
+    override fun photo(): BehaviorSubject<Bitmap> = photoSubject
 
     override fun businessName(): BehaviorSubject<CharSequence> = businessNameSubject
 

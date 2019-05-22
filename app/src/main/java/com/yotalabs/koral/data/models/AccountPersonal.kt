@@ -1,5 +1,6 @@
 package com.yotalabs.koral.data.models
 
+import android.graphics.Bitmap
 import com.yotalabs.koral.ui.adapters.DisplayableItem
 
 /**
@@ -12,5 +13,5 @@ data class AccountPersonal(
     var lastName: String,
     var phoneNumber: String,
     var email: String,
-    var photo: String
+    var photo: Bitmap
 ) : DisplayableItem

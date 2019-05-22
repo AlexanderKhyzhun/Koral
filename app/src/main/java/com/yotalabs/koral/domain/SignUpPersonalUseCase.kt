@@ -1,5 +1,6 @@
 package com.yotalabs.koral.domain
 
+import android.graphics.Bitmap
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import okhttp3.ResponseBody
@@ -17,7 +18,9 @@ interface SignUpPersonalUseCase {
     fun password(): BehaviorSubject<CharSequence>
     fun terms(): BehaviorSubject<Boolean>
     fun nextButton(): BehaviorSubject<Boolean>
+    fun photo(): BehaviorSubject<Bitmap>
 
     fun createPersonalAccount(): Observable<Boolean>
+
 
 }

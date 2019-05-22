@@ -1,5 +1,6 @@
 package com.yotalabs.koral.data.storages
 
+import android.graphics.Bitmap
 import com.yotalabs.koral.ui.adapters.models.ProfessionItem
 import com.yotalabs.koral.ui.adapters.models.ServiceItem
 import com.yotalabs.koral.ui.adapters.models.SubServiceItem
@@ -12,7 +13,7 @@ interface SignUpRepository {
     fun phoneNumber(): BehaviorSubject<CharSequence>
     fun email(): BehaviorSubject<CharSequence>
     fun password(): BehaviorSubject<CharSequence>
-    fun photo(): BehaviorSubject<CharSequence>
+    fun photo(): BehaviorSubject<Bitmap>
     fun businessName(): BehaviorSubject<CharSequence>
     fun businessType(): BehaviorSubject<CharSequence>
     fun accountType(): BehaviorSubject<CharSequence>

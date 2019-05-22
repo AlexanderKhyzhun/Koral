@@ -65,11 +65,18 @@ class ConfirmationFragment : BaseFragment(), ConfirmationView {
 
         item_toolbar_right_button.text = TOOLBAR_BUTTON
 
+        item_toolbar_right_button.clicks()
+            .debounce(BaseActivity.CLICK_DEBOUNCE, TimeUnit.MILLISECONDS)
+            .compose(bindUntilDestroy())
+            .observeOn(schedulers.mainThread())
+            .subscribe { Timber.d("Info clicked") }
+
         item_toolbar_back_button.clicks()
             .debounce(BaseActivity.CLICK_DEBOUNCE, TimeUnit.MILLISECONDS)
             .compose(bindUntilDestroy())
             .observeOn(schedulers.mainThread())
             .subscribe { callback?.fromConfirmationToServices() }
+
 
 
         fragment_confirmation_button_apply.clicks()
@@ -95,7 +102,7 @@ class ConfirmationFragment : BaseFragment(), ConfirmationView {
             empty(),
             { Timber.d("negative") },
             { Timber.d("positive") }
-        )
+        )?.show()
 
     }
 

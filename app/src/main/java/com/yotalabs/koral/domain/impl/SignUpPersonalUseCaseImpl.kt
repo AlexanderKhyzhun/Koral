@@ -1,5 +1,6 @@
 package com.yotalabs.koral.domain.impl
 
+import android.graphics.Bitmap
 import com.yotalabs.koral.data.Api
 import com.yotalabs.koral.domain.SignUpPersonalUseCase
 import com.yotalabs.koral.data.storages.SignUpRepository
@@ -35,12 +36,15 @@ class SignUpPersonalUseCaseImpl(
 
     override fun nextButton(): BehaviorSubject<Boolean> = signUpRepository.nextButton()
 
+    override fun photo(): BehaviorSubject<Bitmap> = signUpRepository.photo()
+
+
     override fun createPersonalAccount(): Observable<Boolean> {
         val firstNameObs = signUpRepository.firstName().map(CharSequence::toString)
         val lastNameObs = signUpRepository.lastName().map(CharSequence::toString)
         val phoneNumberObs = signUpRepository.phoneNumber().map(CharSequence::toString)
         val emailObs = signUpRepository.email().map(CharSequence::toString)
-        val photoObs = signUpRepository.photo().map(CharSequence::toString)
+        val photoObs = signUpRepository.photo()
 
         return Observables.zip(
             firstNameObs,

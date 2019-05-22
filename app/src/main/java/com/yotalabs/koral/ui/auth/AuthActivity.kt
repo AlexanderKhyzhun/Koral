@@ -1,8 +1,12 @@
 package com.yotalabs.koral.ui.auth
 
+import android.Manifest.*
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -26,6 +30,10 @@ import org.koin.androidx.scope.ext.android.bindScope
 import org.koin.androidx.scope.ext.android.getOrCreateScope
 import timber.log.Timber
 import java.util.*
+import android.provider.MediaStore
+import android.graphics.BitmapFactory
+import com.yotalabs.koral.ui.auth.congratulations.CongratulationsFragment
+
 
 /**
  * @author SashaKhyzhun
@@ -40,7 +48,8 @@ class AuthActivity : BaseActivity(), AuthView,
     ProfessionFragment.Callback,
     OtherFragment.Callback,
     ServicesFragment.Callback,
-    ConfirmationFragment.Callback {
+    ConfirmationFragment.Callback,
+    PhotoFragment.Callback {
 
     val schedulers: Schedulers by inject()
 
@@ -101,18 +110,110 @@ class AuthActivity : BaseActivity(), AuthView,
                 ChangeAnimation.BACK
             )
 
+            is ConfirmationFragment -> attachFragment(
+                ServicesFragment.newInstance(),
+                ServicesFragment.TAG,
+                ChangeAnimation.BACK
+            )
+
+            is PhotoFragment -> {
+                when (stack.peek()) {
+                    is ConfirmationFragment -> attachFragment(
+                        ConfirmationFragment.newInstance(),
+                        ConfirmationFragment.TAG,
+                        ChangeAnimation.BACK
+                    )
+
+                }
+                /*
+                 * if previous confirmation -> confirmations
+                 * if previous ............ -> .............
+                 */
+            }
+            is CongratulationsFragment -> attachFragment(
+                    PhotoFragment.newInstance(),
+                    PhotoFragment.TAG,
+                    ChangeAnimation.BACK
+            )
+
             else -> super.onBackPressed()
         }
     }
+
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == MY_CAMERA_PERMISSION_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                startActivityForResult(cameraIntent, CAMERA_REQUEST)
+            }
+        }
+        if (requestCode == MY_STORAGE_PERMISSION_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startActivityForResult(
+                    Intent(
+                        Intent.ACTION_PICK,
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                    ),
+                    STORAGE_REQUEST)
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            CAMERA_REQUEST -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    val photo = data?.extras?.get("data") as Bitmap
+                    presenter.savePhotoFromCamera(photo)
+                }
+            }
+            STORAGE_REQUEST -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    val selectedImage = data?.data
+                    val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
+
+                    val cursor = contentResolver.query(selectedImage, filePathColumn,
+                        null,
+                        null,
+                        null
+                    )
+                    cursor!!.moveToFirst()
+
+                    val columnIndex = cursor.getColumnIndex(filePathColumn[0])
+                    val picturePath = cursor.getString(columnIndex)
+                    val photo = BitmapFactory.decodeFile(picturePath)
+                    cursor.close()
+
+                    presenter.savePhotoFromStorage(photo)
+                }
+            }
+        }
+    }
+
 
     private fun attachFirstFragment() {
         stack.push(LoginFragment.newInstance())
         replaceFragment(
             R.id.activity_login_container,
             supportFragmentManager,
-            ServicesFragment.newInstance(),
-            ServicesFragment.TAG
+            LoginFragment.newInstance(),
+            LoginFragment.TAG
         )
+//        stack.push(PhotoFragment.newInstance())
+//        replaceFragment(
+//            R.id.activity_login_container,
+//            supportFragmentManager,
+//            PhotoFragment.newInstance(),
+//            PhotoFragment.TAG
+//        )
     }
 
     private fun attachFragment(
@@ -252,6 +353,42 @@ class AuthActivity : BaseActivity(), AuthView,
         )
     }
 
+    override fun redirectFromPhotoToConfirmation() {
+        attachFragment(
+            ConfirmationFragment.newInstance(),
+            ConfirmationFragment.TAG,
+            ChangeAnimation.BACK
+        )
+    }
+
+    override fun redirectFromPhotoToCongratulations() {
+        attachFragment(
+            CongratulationsFragment.newInstance(),
+            CongratulationsFragment.TAG,
+            ChangeAnimation.FORWARD
+        )
+    }
+
+    override fun takePhoto() {
+        if (checkSelfPermission(permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(arrayOf(permission.CAMERA), MY_CAMERA_PERMISSION_CODE)
+        } else {
+            val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            startActivityForResult(cameraIntent, CAMERA_REQUEST)
+        }
+    }
+
+    override fun importPhoto() {
+        Timber.d("Auth | importPhoto")
+        if (checkSelfPermission(permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(arrayOf(permission.WRITE_EXTERNAL_STORAGE), MY_STORAGE_PERMISSION_CODE)
+        } else {
+
+            startActivityForResult(
+                Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI), STORAGE_REQUEST)
+        }
+    }
+
     /**
      * Error and messages
      */
@@ -275,6 +412,12 @@ class AuthActivity : BaseActivity(), AuthView,
     companion object {
         const val TAG = "AuthActivity"
         const val TITLE = "Log In"
+
+        private const val CAMERA_REQUEST = 1888
+        private const val STORAGE_REQUEST = 1889
+        private const val MY_CAMERA_PERMISSION_CODE = 100
+        private const val MY_STORAGE_PERMISSION_CODE = 101
+
         fun getIntent(context: Context?) = Intent(context, AuthActivity::class.java)
     }
 
