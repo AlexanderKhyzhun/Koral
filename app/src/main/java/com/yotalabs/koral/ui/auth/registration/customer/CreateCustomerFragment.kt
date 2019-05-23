@@ -21,7 +21,9 @@ import com.yotalabs.koral.data.Schedulers
 import com.yotalabs.koral.domain.models.ValidationView
 import com.yotalabs.koral.ui.mvp.BaseActivity
 import com.yotalabs.koral.ui.mvp.BaseFragment
+import com.yotalabs.koral.utils.setVisible
 import kotlinx.android.synthetic.main.fragment_create_customer.*
+import kotlinx.android.synthetic.main.item_toolbar_purple.*
 import org.jetbrains.anko.support.v4.toast
 import org.koin.android.ext.android.inject
 import timber.log.Timber
@@ -35,6 +37,7 @@ class CreateCustomerFragment : BaseFragment(), CreateCustomerView {
 
     interface Callback {
         fun onSignedUpCustomerAccount()
+        fun redirectFromCustomerToChoosePage()
     }
 
     val schedulers: Schedulers by inject()
@@ -64,6 +67,18 @@ class CreateCustomerFragment : BaseFragment(), CreateCustomerView {
     @SuppressLint("CheckResult")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        item_toolbar_title.text = TITLE
+
+        item_toolbar_right_button.setVisible()
+
+        item_toolbar_right_button.text = TOOLBAR_BUTTON
+
+        item_toolbar_right_button.clicks()
+            .debounce(BaseActivity.CLICK_DEBOUNCE, TimeUnit.MILLISECONDS)
+            .compose(bindUntilDestroy())
+            .observeOn(schedulers.mainThread())
+            .subscribe { toast("Help clicked") }
 
         fragment_create_customer_btn_next.clicks()
             .debounce(BaseActivity.CLICK_DEBOUNCE, TimeUnit.MILLISECONDS)
@@ -274,6 +289,8 @@ class CreateCustomerFragment : BaseFragment(), CreateCustomerView {
     }
 
     companion object {
+        const val TITLE = "Create account"
+        const val TOOLBAR_BUTTON = "Help"
         const val TAG = "CreateCustomerFragment"
         fun newInstance() = CreateCustomerFragment()
     }

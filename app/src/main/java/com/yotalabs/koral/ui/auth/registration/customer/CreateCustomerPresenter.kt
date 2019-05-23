@@ -5,6 +5,7 @@ import android.text.TextUtils
 import android.util.Patterns
 import com.arellomobile.mvp.InjectViewState
 import com.yotalabs.koral.data.Schedulers
+import com.yotalabs.koral.domain.SignUpCustomerUseCase
 import com.yotalabs.koral.domain.SignUpPersonalUseCase
 import com.yotalabs.koral.domain.models.ValidationView
 import com.yotalabs.koral.ui.mvp.BaseActivity
@@ -26,7 +27,7 @@ import java.util.concurrent.TimeUnit
 class CreateCustomerPresenter : BasePresenter<CreateCustomerView>(), KoinComponent {
 
     val schedulers: Schedulers by inject()
-    val useCase: SignUpPersonalUseCase by inject()
+    val useCase: SignUpCustomerUseCase by inject()
 
     var buttonStatus = false
 

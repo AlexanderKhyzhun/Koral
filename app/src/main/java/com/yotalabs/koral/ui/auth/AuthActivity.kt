@@ -379,7 +379,31 @@ class AuthActivity : BaseActivity(), AuthView,
     }
 
 
+    override fun redirectFromCustomerToChoosePage() {
+        attachFragment(
+            ChooseAccountFragment.newInstance(),
+            ChooseAccountFragment.TAG,
+            ChangeAnimation.BACK
+        )
+    }
+
+    override fun redirectFromCorporateToChoosePage() {
+        attachFragment(
+            ChooseAccountFragment.newInstance(),
+            ChooseAccountFragment.TAG,
+            ChangeAnimation.BACK
+        )
+    }
+
     override fun onSignedUpCustomerAccount() {
+        attachFragment(
+            PhotoFragment.newInstance(),
+            PhotoFragment.TAG,
+            ChangeAnimation.FORWARD
+        )
+    }
+
+    override fun onSignedUpCorporateAccount() {
         attachFragment(
             PhotoFragment.newInstance(),
             PhotoFragment.TAG,
