@@ -110,11 +110,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragment_create_customer_et_password" />
 
+    <TextView
+        android:id="@+id/fragment_create_customer_tv_terms_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:text="You have to accept terms and privacy policy to continue"
+        android:textColor="@color/error"
+        android:textSize="12sp"
+        android:textStyle="normal"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_create_customer_tv_terms_and_privacy" />
+
     <CheckBox
         android:id="@+id/fragment_create_customer_checked_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:checked="true"
@@ -124,7 +140,7 @@
         android:textStyle="normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_create_customer_tv_terms_and_privacy" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_create_customer_tv_terms_error" />
 
 
     <Button
@@ -136,7 +152,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/item_round_solid"
-        android:text="Next"
+        android:text="Sign Up"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="18sp"

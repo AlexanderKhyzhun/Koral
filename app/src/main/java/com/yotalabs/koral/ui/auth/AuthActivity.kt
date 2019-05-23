@@ -123,7 +123,16 @@ class AuthActivity : BaseActivity(), AuthView,
                         ConfirmationFragment.TAG,
                         ChangeAnimation.BACK
                     )
-
+                    is CreateCustomerFragment -> attachFragment(
+                        CreateCustomerFragment.newInstance(),
+                        CreateCustomerFragment.TAG,
+                        ChangeAnimation.BACK
+                    )
+                    is CreateCorporateFragment -> attachFragment(
+                        CreateCorporateFragment.newInstance(),
+                        CreateCorporateFragment.TAG,
+                        ChangeAnimation.BACK
+                    )
                 }
                 /*
                  * if previous confirmation -> confirmations
@@ -365,6 +374,15 @@ class AuthActivity : BaseActivity(), AuthView,
         attachFragment(
             CongratulationsFragment.newInstance(),
             CongratulationsFragment.TAG,
+            ChangeAnimation.FORWARD
+        )
+    }
+
+
+    override fun onSignedUpCustomerAccount() {
+        attachFragment(
+            PhotoFragment.newInstance(),
+            PhotoFragment.TAG,
             ChangeAnimation.FORWARD
         )
     }
